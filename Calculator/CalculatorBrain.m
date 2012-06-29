@@ -66,11 +66,11 @@
         double divisor=[self popOperand];
         if (divisor) result=[self popOperand]/divisor;
     }
-    else if([@"sin" isEqualToString:operation]) {//not working right
+    else if([@"sin" isEqualToString:operation]) {//in rads
         
         result=sin([self popOperand]);
     }
-    else if([@"cos" isEqualToString:operation]) {//not working right
+    else if([@"cos" isEqualToString:operation]) {//in rads
          result=cos([self popOperand]);
     }
     else if([@"sqrt" isEqualToString:operation]) {

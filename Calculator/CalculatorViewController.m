@@ -29,8 +29,22 @@
     return _brain;
 }
 
+- (void) deleteEqualSignIfExist {
+    NSRange range=[self.allOperationsDisplay.text rangeOfString:@"="];
+    if (range.location==NSNotFound) {}
+    else {
+        NSUInteger lengthAllOperationsDisplay=self.allOperationsDisplay.text.length;
+        if ((int)lengthAllOperationsDisplay-1<0){}
+        else {
+            self.allOperationsDisplay.text=[self.allOperationsDisplay.text substringToIndex:lengthAllOperationsDisplay-1];
+        }
+    }
+}
+
 
 - (IBAction)digitPressed:(UIButton *)sender {
+    
+    [self deleteEqualSignIfExist];
     
     NSString *digit=sender.currentTitle;
     if (self.userIsInTheMiddleOfEnteringANumber) {
@@ -61,6 +75,9 @@
     self.display.text=[NSString stringWithFormat:@"%g",result];
     
     self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:operation];
+    
+     self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@"="];
+    
 }
 - (IBAction)floatingPointPressed: (UIButton *)sender {
     if (!userTypedAFloatingPoint) {
