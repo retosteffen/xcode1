@@ -71,14 +71,18 @@
 - (IBAction)backspacePressed {
     if (self.userIsInTheMiddleOfEnteringANumber) {
         NSUInteger length=self.display.text.length;
+        NSUInteger lengthAllOperationsDisplay=self.allOperationsDisplay.text.length;
         if ((int)length-1<0){}
         else if ((int) length-1==0) {
             self.display.text=[self.display.text substringToIndex:length-1];
             self.display.text=@"0";
+            self.allOperationsDisplay.text=[self.allOperationsDisplay.text substringToIndex:lengthAllOperationsDisplay-1];
             self.userIsInTheMiddleOfEnteringANumber=NO;
+            
         }
         else {
             self.display.text=[self.display.text substringToIndex:length-1];
+            self.allOperationsDisplay.text=[self.allOperationsDisplay.text substringToIndex:lengthAllOperationsDisplay-1];
         }
     }
 }
