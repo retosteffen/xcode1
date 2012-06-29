@@ -7,28 +7,78 @@
 //
 
 #import "CalculatorViewController.h"
+#import "CalculatorBrain.h"
 
 @interface CalculatorViewController ()
+
+@property (nonatomic) BOOL userIsInTheMiddleOfEnteringANumber;
+@property (nonatomic) BOOL userTypedAFloatingPoint;
+@property (nonatomic,strong) CalculatorBrain *brain;
 
 @end
 
 @implementation CalculatorViewController
+@synthesize display;
+@synthesize allOperationsDisplay;//ugly
+@synthesize userIsInTheMiddleOfEnteringANumber;
+@synthesize brain=_brain;
+@synthesize userTypedAFloatingPoint;
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+- (CalculatorBrain *)brain {
+    if (!_brain) _brain = [[CalculatorBrain alloc]init];
+    return _brain;
 }
 
-- (void)viewDidUnload
-{
+
+- (IBAction)digitPressed:(UIButton *)sender {
+    
+    NSString *digit=sender.currentTitle;
+    if (self.userIsInTheMiddleOfEnteringANumber) {
+        self.display.text=[self.display.text stringByAppendingString:digit];
+        
+    }
+    else {
+        self.display.text=digit;
+        self.userIsInTheMiddleOfEnteringANumber=YES;
+        self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@" "];
+        
+    }
+    self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:digit];
+}
+- (IBAction)enterPressed {
+    [self.brain pushOperand:[self.display.text doubleValue]];
+    self.userIsInTheMiddleOfEnteringANumber=NO;
+    self.userTypedAFloatingPoint=NO;
+    
+    
+}
+- (IBAction)operationPressed:(UIButton *)sender {
+    if (self.userIsInTheMiddleOfEnteringANumber) {
+        [self enterPressed];
+    }
+    NSString *operation=[sender currentTitle];
+    double result= [self.brain performOperation:operation];
+    self.display.text=[NSString stringWithFormat:@"%g",result];
+    
+    self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:operation];
+}
+- (IBAction)floatingPointPressed: (UIButton *)sender {
+    if (!userTypedAFloatingPoint) {
+        userTypedAFloatingPoint=YES;
+        [self digitPressed:sender];
+    }
+}
+
+
+- (IBAction)clearAllPressed {
+    
+    [self.brain clearAll];
+    self.allOperationsDisplay.text=@"";
+}
+
+
+- (void)viewDidUnload {
+    [self setAllOperationsDisplay:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
 }
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
-
 @end
