@@ -79,6 +79,9 @@
     else if([@"PI" isEqualToString:operation]) {
         result=M_PI;
     }
+    else if([@"+/-" isEqualToString:operation]) {
+         result=-1*([self popOperand]);
+    }
 
     [self pushOperand:result];
     return result;

@@ -79,6 +79,23 @@
      self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@"="];
     
 }
+
+
+- (IBAction)plusMinusPressed:(UIButton *)sender {
+    if (self.userTypedAFloatingPoint) {
+        [self digitPressed:sender];
+    }
+    else {
+        [self enterPressed];
+        [self operationPressed:sender];
+    
+    }
+}
+
+
+
+
+
 - (IBAction)floatingPointPressed: (UIButton *)sender {
     if (!userTypedAFloatingPoint) {
         userTypedAFloatingPoint=YES;
@@ -108,6 +125,7 @@
 - (IBAction)clearAllPressed {
     
     [self.brain clearAll];
+    self.display.text=@"0";
     self.allOperationsDisplay.text=@"";
 }
 
