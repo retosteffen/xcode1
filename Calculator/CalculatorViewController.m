@@ -33,11 +33,9 @@
     NSRange range=[self.allOperationsDisplay.text rangeOfString:@"="];
     if (range.location==NSNotFound) {}
     else {
-        NSUInteger lengthAllOperationsDisplay=self.allOperationsDisplay.text.length;
-        if ((int)lengthAllOperationsDisplay-1<0){}
-        else {
-            self.allOperationsDisplay.text=[self.allOperationsDisplay.text substringToIndex:lengthAllOperationsDisplay-1];
-        }
+        
+        self.allOperationsDisplay.text=[self.allOperationsDisplay.text substringToIndex:range.location];
+        self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@" "];
     }
 }
 
@@ -54,19 +52,24 @@
     else {
         self.display.text=digit;
         self.userIsInTheMiddleOfEnteringANumber=YES;
-        self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@" "];
+        
         
     }
-    self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:digit];
+    
 }
 - (IBAction)enterPressed {
+    [self deleteEqualSignIfExist];
     [self.brain pushOperand:[self.display.text doubleValue]];
     self.userIsInTheMiddleOfEnteringANumber=NO;
     self.userTypedAFloatingPoint=NO;
     
+   
+    self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:self.display.text];
+     self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@" "];
     
 }
 - (IBAction)operationPressed:(UIButton *)sender {
+    [self deleteEqualSignIfExist];
     if (self.userIsInTheMiddleOfEnteringANumber) {
         [self enterPressed];
     }
@@ -74,9 +77,11 @@
     double result= [self.brain performOperation:operation];
     self.display.text=[NSString stringWithFormat:@"%g",result];
     
+   
     self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:operation];
+     self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@" "];
+    self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@"="];
     
-     self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@"="];
     
 }
 
@@ -88,7 +93,7 @@
     else {
         [self enterPressed];
         [self operationPressed:sender];
-    
+        
     }
 }
 
@@ -105,18 +110,14 @@
 - (IBAction)backspacePressed {
     if (self.userIsInTheMiddleOfEnteringANumber) {
         NSUInteger length=self.display.text.length;
-        NSUInteger lengthAllOperationsDisplay=self.allOperationsDisplay.text.length;
         if ((int)length-1<0){}
         else if ((int) length-1==0) {
             self.display.text=[self.display.text substringToIndex:length-1];
             self.display.text=@"0";
-            self.allOperationsDisplay.text=[self.allOperationsDisplay.text substringToIndex:lengthAllOperationsDisplay-1];
             self.userIsInTheMiddleOfEnteringANumber=NO;
-            
         }
         else {
             self.display.text=[self.display.text substringToIndex:length-1];
-            self.allOperationsDisplay.text=[self.allOperationsDisplay.text substringToIndex:lengthAllOperationsDisplay-1];
         }
     }
 }

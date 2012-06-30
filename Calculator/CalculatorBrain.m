@@ -29,8 +29,7 @@
 
 
 - (void) pushOperand:(double)operand {
-    NSNumber *operandObject=[NSNumber numberWithDouble:operand];
-    [self.operandStack addObject:operandObject];
+    [self.operandStack addObject:[NSNumber numberWithDouble:operand]];
 }
 
 
@@ -76,7 +75,7 @@
     else if([@"sqrt" isEqualToString:operation]) {
         result=sqrt([self popOperand]);
     }
-    else if([@"PI" isEqualToString:operation]) {
+    else if([@"π" isEqualToString:operation]) {
         result=M_PI;
     }
     else if([@"+/-" isEqualToString:operation]) {
@@ -85,6 +84,11 @@
 
     [self pushOperand:result];
     return result;
+}
+
+
+- (NSString *) description {
+    return [NSString stringWithFormat:@"stack=%@",self.operandStack];
 }
 
 @end
