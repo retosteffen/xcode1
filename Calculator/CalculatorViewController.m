@@ -29,6 +29,7 @@
     return _brain;
 }
 
+
 - (void) deleteEqualSignIfExist {
     NSRange range=[self.allOperationsDisplay.text rangeOfString:@"="];
     if (range.location==NSNotFound) {}
@@ -57,6 +58,8 @@
     }
     
 }
+
+
 - (IBAction)enterPressed {
     [self deleteEqualSignIfExist];
     [self.brain pushOperand:[self.display.text doubleValue]];
@@ -68,6 +71,8 @@
      self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@" "];
     
 }
+
+
 - (IBAction)operationPressed:(UIButton *)sender {
     [self deleteEqualSignIfExist];
     if (self.userIsInTheMiddleOfEnteringANumber) {
@@ -98,15 +103,14 @@
 }
 
 
-
-
-
 - (IBAction)floatingPointPressed: (UIButton *)sender {
     if (!userTypedAFloatingPoint) {
         userTypedAFloatingPoint=YES;
         [self digitPressed:sender];
     }
 }
+
+
 - (IBAction)backspacePressed {
     if (self.userIsInTheMiddleOfEnteringANumber) {
         NSUInteger length=self.display.text.length;
