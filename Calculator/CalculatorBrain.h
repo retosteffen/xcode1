@@ -14,4 +14,10 @@
 - (double) performOperation: (NSString *)operation;
 - (void) clearAll;
 
+
+@property (nonatomic, readonly) id program;
+
++ (NSString *)descriptionOfProgram:(id)program;
++ (double)runProgram:(id)program;
+
 @end
