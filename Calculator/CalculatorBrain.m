@@ -33,7 +33,7 @@
 
 @synthesize variableValues=_variableValues;
 - (NSDictionary *) variableValues {
-   
+    
     
     if (_variableValues == nil) _variableValues = [[NSDictionary alloc] init];
     
@@ -109,18 +109,18 @@
     if ([program isKindOfClass:[NSArray class]]) {
         programlist = [program mutableCopy];
     }
-
-   
-            
-            
-       
+    
+    
+    
+    
+    
     NSString *description=[self descriptionOfTopOfStack:programlist];
     
     while (programlist.count) {
         
         description=[NSString stringWithFormat:@"%@,%@",description,[self descriptionOfTopOfStack:programlist]];
     }
-  return description;
+    return description;
 }
 
 
@@ -144,9 +144,9 @@
 }
 
 -(void)popLastItem {
-       
-        id topOfStack = [self.programStack lastObject];
-        if (topOfStack) [self.programStack removeLastObject];
+    
+    id topOfStack = [self.programStack lastObject];
+    if (topOfStack) [self.programStack removeLastObject];
     
 }
 
@@ -217,10 +217,10 @@
     if ([program isKindOfClass:[NSArray class]]) {
         stack = [program mutableCopy];
     }
-   
+    
     for (int i=0;i<stack.count;i++) {
         id obj=[stack objectAtIndex:i];
-    
+        
         if ([variableValues objectForKey:obj]){
             id value=[variableValues objectForKey:obj];
             [stack replaceObjectAtIndex:i withObject:value];
@@ -228,7 +228,7 @@
         
         
     }
- 
+    
     
     return [self runProgram:stack];
 }
@@ -236,8 +236,8 @@
 
 
 - (void) clearAll {
-        [self.programStack removeAllObjects];
-      NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"x",[NSNumber numberWithInt:0],@"a",[NSNumber numberWithInt:0],@"b",nil];
+    [self.programStack removeAllObjects];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"x",[NSNumber numberWithInt:0],@"a",[NSNumber numberWithInt:0],@"b",nil];
     [self addVariableValues:dict];
     
 }
@@ -255,13 +255,13 @@
     
     for (NSString *variable in variableUsed) {
         
-    
-    if ([self.variableValues objectForKey:variable]){
         
-        id value=[self.variableValues objectForKey:variable];
-        string=[string stringByAppendingFormat:@"%@=%@ ",variable,value];
+        if ([self.variableValues objectForKey:variable]){
+            
+            id value=[self.variableValues objectForKey:variable];
+            string=[string stringByAppendingFormat:@"%@=%@ ",variable,value];
+        }
     }
-       }
     
     return string;
     
@@ -270,7 +270,7 @@
 
 
 + (NSSet *) variablesUsedInProgram:(id)program {
-
+    
     NSMutableArray *stack;
     if ([program isKindOfClass:[NSArray class]]) {
         stack = [program mutableCopy];
@@ -289,7 +289,7 @@
                 
             }
             else {
-            setVariables=[setVariables setByAddingObject:obj];
+                setVariables=[setVariables setByAddingObject:obj];
             }
             
         }
@@ -298,7 +298,7 @@
         
     }
     
-
+    
     if (!setVariables) {return nil;}
     else {return setVariables;}
     

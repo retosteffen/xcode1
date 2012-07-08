@@ -30,7 +30,7 @@
     return _brain;
 }
 
-
+//not used anymore
 - (void) deleteEqualSignIfExist {
     NSRange range=[self.allOperationsDisplay.text rangeOfString:@"="];
     if (range.location==NSNotFound) {}
@@ -68,8 +68,8 @@
     self.userTypedAFloatingPoint=NO;
     
     self.allOperationsDisplay.text=[CalculatorBrain descriptionOfProgram:self.brain.program];
-   
-
+    
+    
     
 }
 
@@ -83,9 +83,9 @@
     double result= [self.brain performOperation:operation];
     self.display.text=[NSString stringWithFormat:@"%g",result];
     
-   
+    
     self.allOperationsDisplay.text=[CalculatorBrain descriptionOfProgram:self.brain.program];
-   
+    
 }
 
 
@@ -111,12 +111,12 @@
 
 - (IBAction)backspacePressed {
     if (self.userIsInTheMiddleOfEnteringANumber) {
-    
+        
         NSUInteger length=self.display.text.length;
         
         NSRange range=[self.display.text rangeOfString:@"."];
         if (length-1==range.location) {
-           self.userTypedAFloatingPoint=NO;  
+            self.userTypedAFloatingPoint=NO;  
         }
         
         if ((int)length-1<0){}
@@ -151,24 +151,24 @@
 
 - (IBAction)variablePressed:(UIButton *)sender {
     if (self.userIsInTheMiddleOfEnteringANumber) {
-       [self.brain pushOperand:[self.display.text doubleValue]];
-    
+        [self.brain pushOperand:[self.display.text doubleValue]];
         
-
+        
+        self.userIsInTheMiddleOfEnteringANumber=NO;
     }
     
- 
+    
     NSString *variable=[sender currentTitle];
     [self.brain pushVariable:variable];
-  
-     self.allOperationsDisplay.text=[CalculatorBrain descriptionOfProgram:self.brain.program];
     
+    self.allOperationsDisplay.text=[CalculatorBrain descriptionOfProgram:self.brain.program];
+    self.variablesUsedDisplay.text=[self.brain showVariablesUsedInProgram:self.brain.program];
 }
 
 - (IBAction)testPressed:(UIButton *)sender {
     NSDictionary *dict;
     if ([@"Test 1" isEqualToString:sender.currentTitle]) {
-        dict=[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1],@"x",[NSNumber numberWithInt:2],@"a",[NSNumber numberWithInt:3],@"b",nil];
+        dict=[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:1.1],@"x",[NSNumber numberWithInt:2],@"a",[NSNumber numberWithInt:3],@"b",nil];
     }
     else if ([@"Test 2" isEqualToString:sender.currentTitle]) {
         dict=[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:4],@"x",[NSNumber numberWithInt:10],@"a",[NSNumber numberWithInt:0],@"b",nil];    
