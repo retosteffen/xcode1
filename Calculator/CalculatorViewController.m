@@ -68,8 +68,7 @@
     
     self.allOperationsDisplay.text=[CalculatorBrain descriptionOfProgram:self.brain.program];
    
-    //self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:self.display.text];
-     //self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@" "];
+
     
 }
 
@@ -85,12 +84,7 @@
     
    
     self.allOperationsDisplay.text=[CalculatorBrain descriptionOfProgram:self.brain.program];
-    /*
-    self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:operation];
-     self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@" "];
-    self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@"="];
-    
-    */
+   
 }
 
 
@@ -116,16 +110,32 @@
 
 - (IBAction)backspacePressed {
     if (self.userIsInTheMiddleOfEnteringANumber) {
+    
         NSUInteger length=self.display.text.length;
+        
+        NSRange range=[self.display.text rangeOfString:@"."];
+        if (length-1==range.location) {
+           self.userTypedAFloatingPoint=NO;  
+        }
+        
         if ((int)length-1<0){}
         else if ((int) length-1==0) {
             self.display.text=[self.display.text substringToIndex:length-1];
-            self.display.text=@"0";
+            self.display.text=[NSString stringWithFormat:@"%g",[CalculatorBrain runProgram:self.brain.program]];
             self.userIsInTheMiddleOfEnteringANumber=NO;
         }
         else {
             self.display.text=[self.display.text substringToIndex:length-1];
         }
+    }
+    else {
+        
+        
+        
+        [self.brain popLastItem];
+        self.allOperationsDisplay.text=[CalculatorBrain descriptionOfProgram:self.brain.program];
+        self.display.text=[NSString stringWithFormat:@"%g",[CalculatorBrain runProgram:self.brain.program]];
+        
     }
 }
 
@@ -142,13 +152,13 @@
        [self.brain pushOperand:[self.display.text doubleValue]];
     
         
-    //self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:self.display.text];
+
     }
     
  
     NSString *variable=[sender currentTitle];
     [self.brain pushVariable:variable];
-    //self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:variable];
+  
      self.allOperationsDisplay.text=[CalculatorBrain descriptionOfProgram:self.brain.program];
     
 }

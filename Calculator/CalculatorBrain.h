@@ -18,7 +18,7 @@
 - (void)addVariableValues: (NSDictionary *)dictionary;
 
 + (NSString *) typeOfOperand:(NSString *) operand ;
-
+-(void)popLastItem;
 
 + (NSString *) descriptionOfTopOfStack:(NSMutableArray *)stack;
 

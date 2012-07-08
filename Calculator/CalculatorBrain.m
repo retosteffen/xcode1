@@ -143,6 +143,16 @@
     return [[self class] runProgram:self.program usingVariableValues:self.variableValues];
 }
 
+-(void)popLastItem {
+       
+        id topOfStack = [self.programStack lastObject];
+        if (topOfStack) [self.programStack removeLastObject];
+    
+}
+
+
+
+
 + (double)popOperandOffProgramStack:(NSMutableArray *)stack
 {
     double result = 0;
