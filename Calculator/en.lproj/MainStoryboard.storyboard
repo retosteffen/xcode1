@@ -464,16 +464,24 @@
                                     <action selector="testPressed:" destination="2" eventType="touchUpInside" id="Cao-WK-j7s"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="GLZ-rM-Xnm">
+                                <rect key="frame" x="20" y="431" width="280" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="allOperationsDisplay" destination="po6-et-ibg" id="qqJ-KE-soV"/>
                         <outlet property="display" destination="473-GO-3bk" id="VE8-7C-RZS"/>
+                        <outlet property="variablesUsedDisplay" destination="GLZ-rM-Xnm" id="uX2-Ur-zvs"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-430" y="-85"/>
+            <point key="canvasLocation" x="-597" y="-191"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

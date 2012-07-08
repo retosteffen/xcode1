@@ -17,6 +17,10 @@
 - (void)pushVariable: (NSString *) variable;
 - (void)addVariableValues: (NSDictionary *)dictionary;
 
+- (NSString *) showVariablesUsedInProgram:(id)program;
+
+
+
 + (NSString *) typeOfOperand:(NSString *) operand ;
 -(void)popLastItem;
 

@@ -12,6 +12,7 @@
 @interface CalculatorBrain()
 @property (nonatomic, strong) NSMutableArray *programStack;
 @property (nonatomic, strong) NSDictionary *variableValues;
+
 @end
 
 
@@ -42,7 +43,6 @@
 - (void)addVariableValues:(NSDictionary *)dictionary
 {
     self.variableValues=dictionary;
-    [[self class] runProgram:self.program usingVariableValues:self.variableValues];
 }
 
 + (NSString *) typeOfOperand:(NSString *)operand {
@@ -247,12 +247,60 @@
     return [NSString stringWithFormat:@"stack=%@",self.programStack];
 }
 
+- (NSString *) showVariablesUsedInProgram:(id)program {
+    
+    NSSet *variableUsed=[[self class]variablesUsedInProgram:program];
+    
+    NSString *string=@"";
+    
+    for (NSString *variable in variableUsed) {
+        
+    
+    if ([self.variableValues objectForKey:variable]){
+        
+        id value=[self.variableValues objectForKey:variable];
+        string=[string stringByAppendingFormat:@"%@=%@ ",variable,value];
+    }
+       }
+    
+    return string;
+    
+}
+
 
 
 + (NSSet *) variablesUsedInProgram:(id)program {
 
+    NSMutableArray *stack;
+    if ([program isKindOfClass:[NSArray class]]) {
+        stack = [program mutableCopy];
+    }
+    NSSet *setVariables=[[NSSet alloc] init]; ;
     
-    return nil;
+    for (int i=0;i<stack.count;i++) {
+        
+        id obj=[stack objectAtIndex:i];
+        
+        if ([obj isKindOfClass:[NSNumber class]])
+        {}
+        else if ([obj isKindOfClass:[NSString class]])
+        {
+            if ([obj isEqualToString:@"+"] || [obj isEqualToString:@"-"] || [obj isEqualToString:@"/"] || [obj isEqualToString:@"/"] || [obj isEqualToString:@"sin"] || [obj isEqualToString:@"cos"] || [obj isEqualToString:@"π"] || [obj isEqualToString:@"sqrt"] || [obj isEqualToString:@"+/-"]) {
+                
+            }
+            else {
+            setVariables=[setVariables setByAddingObject:obj];
+            }
+            
+        }
+        
+        
+        
+    }
+    
+
+    if (!setVariables) {return nil;}
+    else {return setVariables;}
     
 }
 

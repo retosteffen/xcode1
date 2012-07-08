@@ -20,6 +20,7 @@
 @implementation CalculatorViewController
 @synthesize display;
 @synthesize allOperationsDisplay;
+@synthesize variablesUsedDisplay;
 @synthesize userIsInTheMiddleOfEnteringANumber;
 @synthesize brain=_brain;
 @synthesize userTypedAFloatingPoint;
@@ -145,6 +146,7 @@
     [self.brain clearAll];
     self.display.text=@"0";
     self.allOperationsDisplay.text=@"";
+    self.variablesUsedDisplay.text=@"";
 }
 
 - (IBAction)variablePressed:(UIButton *)sender {
@@ -163,16 +165,34 @@
     
 }
 
-- (IBAction)testPressed:(id)sender {
-    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1],@"x",[NSNumber numberWithInt:2],@"a",[NSNumber numberWithInt:3],@"b",nil];
-
+- (IBAction)testPressed:(UIButton *)sender {
+    NSDictionary *dict;
+    if ([@"Test 1" isEqualToString:sender.currentTitle]) {
+        dict=[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1],@"x",[NSNumber numberWithInt:2],@"a",[NSNumber numberWithInt:3],@"b",nil];
+    }
+    else if ([@"Test 2" isEqualToString:sender.currentTitle]) {
+        dict=[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:4],@"x",[NSNumber numberWithInt:10],@"a",[NSNumber numberWithInt:0],@"b",nil];    
+    }
+    else if ([@"Test 3" isEqualToString:sender.currentTitle]) {
+        dict=nil; 
+    }
+    
     [self.brain addVariableValues:dict];
-
- 
+    self.display.text=[NSString stringWithFormat:@"%g",[CalculatorBrain runProgram:self.brain.program usingVariableValues:dict]];
+    self.allOperationsDisplay.text=[CalculatorBrain descriptionOfProgram:self.brain.program];
+    
+    self.variablesUsedDisplay.text=[self.brain showVariablesUsedInProgram:self.brain.program];
+    
+    
 }
+
+
+
+
 
 - (void)viewDidUnload {
     [self setAllOperationsDisplay:nil];
+    [self setVariablesUsedDisplay:nil];
     [super viewDidUnload];
 }
 @end
