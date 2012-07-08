@@ -118,7 +118,7 @@
     
     while (programlist.count) {
         
-        description=[NSString stringWithFormat:@"%@,%@",[self descriptionOfTopOfStack:programlist],description];
+        description=[NSString stringWithFormat:@"%@,%@",description,[self descriptionOfTopOfStack:programlist]];
     }
   return description;
 }
