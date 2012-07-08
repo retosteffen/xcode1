@@ -53,6 +53,10 @@
         return @"2";
         
     }
+    if ([operand isEqualToString:@"sin"] || [operand isEqualToString:@"cos"] || [operand isEqualToString:@"sqrt"] || [operand isEqualToString:@"+/-"]) {
+        return @"1";
+        
+    }
     
     return @"0";
     
@@ -60,8 +64,8 @@
 
 
 + (NSString *) descriptionOfTopOfStack:(NSMutableArray *)stack {
-     NSString *description=@"";
- 
+    NSString *description=@"";
+    
     id topOfStack = [stack lastObject];
     if (topOfStack) [stack removeLastObject];
     
@@ -69,7 +73,7 @@
     if ([topOfStack isKindOfClass:[NSNumber class]])
     {
         NSNumber *number=topOfStack;
-        description=[description stringByAppendingFormat:@"%g",[number doubleValue]];
+        description=[description stringByAppendingFormat:@"%@",number];
         
     }
     
@@ -77,17 +81,24 @@
     {
         if ([[self class] typeOfOperand:topOfStack]==@"2"){
             id secondArgument=[self descriptionOfTopOfStack:stack];
-           description=[description stringByAppendingFormat:@"(%@ %@ %@)",[self descriptionOfTopOfStack:stack],topOfStack,secondArgument];
+            description=[description stringByAppendingFormat:@"(%@ %@ %@)",[self descriptionOfTopOfStack:stack],topOfStack,secondArgument];
+            
+        }
+        else if ([[self class] typeOfOperand:topOfStack]==@"1"){
+            description=[description stringByAppendingFormat:@"%@ (%@)",topOfStack,[self descriptionOfTopOfStack:stack]];
+            
+        }
+        else if ([[self class] typeOfOperand:topOfStack]==@"0"){
+            description=[description stringByAppendingFormat:@"%@",topOfStack];
             
         }
         
-        
     }
-
     
     
-   return description;
-
+    
+    return description;
+    
 }
 
 
@@ -103,8 +114,13 @@
             
             
        
+    NSString *description=[self descriptionOfTopOfStack:programlist];
     
-  return [self descriptionOfTopOfStack:programlist];
+    while (programlist.count) {
+        
+        description=[NSString stringWithFormat:@"%@,%@",[self descriptionOfTopOfStack:programlist],description];
+    }
+  return description;
 }
 
 
