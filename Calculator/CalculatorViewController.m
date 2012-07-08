@@ -19,7 +19,7 @@
 
 @implementation CalculatorViewController
 @synthesize display;
-@synthesize allOperationsDisplay;//ugly
+@synthesize allOperationsDisplay;
 @synthesize userIsInTheMiddleOfEnteringANumber;
 @synthesize brain=_brain;
 @synthesize userTypedAFloatingPoint;
@@ -66,9 +66,10 @@
     self.userIsInTheMiddleOfEnteringANumber=NO;
     self.userTypedAFloatingPoint=NO;
     
+    self.allOperationsDisplay.text=[CalculatorBrain descriptionOfProgram:self.brain.program];
    
-    self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:self.display.text];
-     self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@" "];
+    //self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:self.display.text];
+     //self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@" "];
     
 }
 
@@ -83,11 +84,13 @@
     self.display.text=[NSString stringWithFormat:@"%g",result];
     
    
+    self.allOperationsDisplay.text=[CalculatorBrain descriptionOfProgram:self.brain.program];
+    /*
     self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:operation];
      self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@" "];
     self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:@"="];
     
-    
+    */
 }
 
 
@@ -134,6 +137,29 @@
     self.allOperationsDisplay.text=@"";
 }
 
+- (IBAction)variablePressed:(UIButton *)sender {
+    if (self.userIsInTheMiddleOfEnteringANumber) {
+       [self.brain pushOperand:[self.display.text doubleValue]];
+    
+        
+    //self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:self.display.text];
+    }
+    
+ 
+    NSString *variable=[sender currentTitle];
+    [self.brain pushVariable:variable];
+    //self.allOperationsDisplay.text=[self.allOperationsDisplay.text stringByAppendingString:variable];
+     self.allOperationsDisplay.text=[CalculatorBrain descriptionOfProgram:self.brain.program];
+    
+}
+
+- (IBAction)testPressed:(id)sender {
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1],@"x",[NSNumber numberWithInt:2],@"a",[NSNumber numberWithInt:3],@"b",nil];
+
+    [self.brain addVariableValues:dict];
+
+ 
+}
 
 - (void)viewDidUnload {
     [self setAllOperationsDisplay:nil];

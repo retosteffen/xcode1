@@ -14,10 +14,18 @@
 - (double) performOperation: (NSString *)operation;
 - (void) clearAll;
 
+- (void)pushVariable: (NSString *) variable;
+- (void)addVariableValues: (NSDictionary *)dictionary;
+
++ (NSString *) typeOfOperand:(NSString *) operand ;
+
+
++ (NSString *) descriptionOfTopOfStack:(NSMutableArray *)stack;
 
 @property (nonatomic, readonly) id program;
 
 + (NSString *)descriptionOfProgram:(id)program;
 + (double)runProgram:(id)program;
-
++ (double)runProgram:(id)program usingVariableValues:(NSDictionary *)variableValues;
++ (NSSet *) variablesUsedInProgram:(id)program;
 @end

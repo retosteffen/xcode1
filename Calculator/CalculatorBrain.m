@@ -11,7 +11,7 @@
 
 @interface CalculatorBrain()
 @property (nonatomic, strong) NSMutableArray *programStack;
-
+@property (nonatomic, strong) NSDictionary *variableValues;
 @end
 
 
@@ -30,9 +30,81 @@
     return [self.programStack copy];
 }
 
+@synthesize variableValues=_variableValues;
+- (NSDictionary *) variableValues {
+   
+    
+    if (_variableValues == nil) _variableValues = [[NSDictionary alloc] init];
+    
+    return _variableValues;
+}
+
+- (void)addVariableValues:(NSDictionary *)dictionary
+{
+    self.variableValues=dictionary;
+    [[self class] runProgram:self.program usingVariableValues:self.variableValues];
+}
+
++ (NSString *) typeOfOperand:(NSString *)operand {
+    
+    
+    
+    if ([operand isEqualToString:@"+"] || [operand isEqualToString:@"-"] || [operand isEqualToString:@"*"] || [operand isEqualToString:@"/"]) {
+        return @"2";
+        
+    }
+    
+    return @"0";
+    
+}
+
+
++ (NSString *) descriptionOfTopOfStack:(NSMutableArray *)stack {
+     NSString *description=@"";
+ 
+    id topOfStack = [stack lastObject];
+    if (topOfStack) [stack removeLastObject];
+    
+    
+    if ([topOfStack isKindOfClass:[NSNumber class]])
+    {
+        NSNumber *number=topOfStack;
+        description=[description stringByAppendingFormat:@"%g",[number doubleValue]];
+        
+    }
+    
+    else if ([topOfStack isKindOfClass:[NSString class]])
+    {
+        if ([[self class] typeOfOperand:topOfStack]==@"2"){
+            id secondArgument=[self descriptionOfTopOfStack:stack];
+           description=[description stringByAppendingFormat:@"(%@ %@ %@)",[self descriptionOfTopOfStack:stack],topOfStack,secondArgument];
+            
+        }
+        
+        
+    }
+
+    
+    
+   return description;
+
+}
+
+
 + (NSString *)descriptionOfProgram:(id)program
 {
-    return @"Implement this in Homework #2";
+    
+    NSMutableArray *programlist;
+    if ([program isKindOfClass:[NSArray class]]) {
+        programlist = [program mutableCopy];
+    }
+
+   
+            
+            
+       
+    
+  return [self descriptionOfTopOfStack:programlist];
 }
 
 
@@ -42,10 +114,17 @@
 }
 
 
+- (void) pushVariable:(NSString *)variable
+{
+    [self.programStack addObject:variable];
+}
+
+
+
 - (double)performOperation:(NSString *)operation
 {
     [self.programStack addObject:operation];
-    return [[self class] runProgram:self.program];
+    return [[self class] runProgram:self.program usingVariableValues:self.variableValues];
 }
 
 + (double)popOperandOffProgramStack:(NSMutableArray *)stack
@@ -106,10 +185,34 @@
 }
 
 
++ (double) runProgram:(id)program usingVariableValues:(NSDictionary *)variableValues
+{
+    NSMutableArray *stack;
+    if ([program isKindOfClass:[NSArray class]]) {
+        stack = [program mutableCopy];
+    }
+   
+    for (int i=0;i<stack.count;i++) {
+        id obj=[stack objectAtIndex:i];
+    
+        if ([variableValues objectForKey:obj]){
+            id value=[variableValues objectForKey:obj];
+            [stack replaceObjectAtIndex:i withObject:value];
+        }
+        
+        
+    }
+ 
+    
+    return [self runProgram:stack];
+}
+
 
 
 - (void) clearAll {
         [self.programStack removeAllObjects];
+      NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"x",[NSNumber numberWithInt:0],@"a",[NSNumber numberWithInt:0],@"b",nil];
+    [self addVariableValues:dict];
     
 }
 
@@ -117,5 +220,15 @@
 - (NSString *) description {
     return [NSString stringWithFormat:@"stack=%@",self.programStack];
 }
+
+
+
++ (NSSet *) variablesUsedInProgram:(id)program {
+
+    
+    return nil;
+    
+}
+
 
 @end
