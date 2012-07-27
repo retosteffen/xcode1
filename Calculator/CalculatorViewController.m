@@ -15,6 +15,8 @@
 @property (nonatomic) BOOL userTypedAFloatingPoint;
 @property (nonatomic,strong) CalculatorBrain *brain;
 
+@property (weak, nonatomic)  IBOutlet UIView *graphView;
+
 @end
 
 @implementation CalculatorViewController
