@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA27BD2E15C30A930035E046 /* AxesDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9D9ACB15C2FCA300EE039E /* AxesDrawer.m */; };
 		DA502AF7159CEFA100619B53 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA502AF6159CEFA100619B53 /* UIKit.framework */; };
 		DA502AF9159CEFA100619B53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA502AF8159CEFA100619B53 /* Foundation.framework */; };
 		DA502AFB159CEFA100619B53 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA502AFA159CEFA100619B53 /* CoreGraphics.framework */; };
@@ -186,6 +187,7 @@
 				DA502B15159CFFAA00619B53 /* CalculatorBrain.m in Sources */,
 				DA9D9AD815C3000B00EE039E /* GraphViewController.m in Sources */,
 				DA9D9ADB15C3044600EE039E /* GraphView.m in Sources */,
+				DA27BD2E15C30A930035E046 /* AxesDrawer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

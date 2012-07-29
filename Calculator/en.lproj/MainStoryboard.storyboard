@@ -415,7 +415,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="TNd-V3-6Yp" kind="push" id="ccu-7K-bJw"/>
+                                    <segue destination="TNd-V3-6Yp" kind="push" identifier="Graph" id="pVF-ZW-8Gu"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -425,10 +425,11 @@
                     <connections>
                         <outlet property="allOperationsDisplay" destination="po6-et-ibg" id="qqJ-KE-soV"/>
                         <outlet property="display" destination="473-GO-3bk" id="VE8-7C-RZS"/>
+                        <outlet property="graphView" destination="8NL-xI-lyz" id="lgg-Lj-TVW"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-1001" y="-148"/>
+            <point key="canvasLocation" x="-967" y="-210"/>
         </scene>
         <!--Graph View Controller-->
         <scene sceneID="BMx-RZ-Sg9">
@@ -448,6 +449,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="epY-I2-dbc"/>
+                    <connections>
+                        <outlet property="graphView" destination="blB-mw-tIh" id="ZYW-hR-VEd"/>
+                    </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="-559" y="-365"/>
@@ -458,8 +462,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CalculatorViewController.h"/>
             <relationships>
                 <relationship kind="action" name="digitPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="floatingPointPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="operationPressed:" candidateClass="UIButton"/>
                 <relationship kind="action" name="plusMinusPressed:" candidateClass="UIButton"/>
                 <relationship kind="action" name="testPressed:" candidateClass="UIButton"/>
                 <relationship kind="action" name="variablePressed:" candidateClass="UIButton"/>
@@ -471,9 +473,15 @@
         </class>
         <class className="GraphView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dataSource"/>
+            </relationships>
         </class>
         <class className="GraphViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="graphView" candidateClass="GraphView"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

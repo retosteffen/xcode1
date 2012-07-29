@@ -188,6 +188,12 @@
     
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Graph"]) {
+        [segue.destinationViewController setBrain:[self.brain.program copy]];
+    }
+}
 
 
 
