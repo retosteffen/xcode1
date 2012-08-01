@@ -139,12 +139,12 @@
 - (void)setup
 {
     CGPoint newOrigin;
-    newOrigin.x = [[NSUserDefaults standardUserDefaults]floatForKey:[[self.dataSource getProgramName] stringByAppendingString:@"_origin.x"]];
-    newOrigin.y = [[NSUserDefaults standardUserDefaults]floatForKey:[[self.dataSource getProgramName] stringByAppendingString:@"_origin.y"]];
-    self.origin = newOrigin;
+    //newOrigin.x = [[NSUserDefaults standardUserDefaults]floatForKey:[[self.dataSource getProgramName] stringByAppendingString:@"_origin.x"]];
+    //newOrigin.y = [[NSUserDefaults standardUserDefaults]floatForKey:[[self.dataSource getProgramName] stringByAppendingString:@"_origin.y"]];
+    //self.origin = newOrigin;
 
   
-    self.scale = [[NSUserDefaults standardUserDefaults]floatForKey:[[self.dataSource getProgramName] stringByAppendingString:@"_scale"]];
+    //self.scale = [[NSUserDefaults standardUserDefaults]floatForKey:[[self.dataSource getProgramName] stringByAppendingString:@"_scale"]];
    
     
     

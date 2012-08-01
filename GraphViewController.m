@@ -69,7 +69,7 @@ return [CalculatorBrain runProgram:self.brain usingVariableValues:[NSDictionary 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
 }
 
 
